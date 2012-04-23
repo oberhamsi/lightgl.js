@@ -153,7 +153,9 @@ Shader.prototype = {
       } else if (value instanceof Matrix) {
         value = value.m;
       }
-      if (isArray(value)) {
+      if (value.uniformType) {
+        gl[value.uniformType](location, new Float32Array(value));
+      } else if (isArray(value)) {
         switch (value.length) {
           case 1: gl.uniform1fv(location, new Float32Array(value)); break;
           case 2: gl.uniform2fv(location, new Float32Array(value)); break;
